@@ -4,7 +4,11 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+    @search_form = SearchForm.new params[:search_form]
     @products = Product.all
+    if @search_form.q.present?
+      @products = @products.named @search_form.q
+    end
   end
 
   # GET /products/1
